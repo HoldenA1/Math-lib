@@ -7,6 +7,8 @@ public class Vector2f {
 	float x, y;
 	final float VECTOR_ARROW_SIZE = 10;
 	
+	public static final Vector2f ZERO = new Vector2f(0, 0);
+	
 	public Vector2f(float x, float y) {
 		this.x = x;
 		this.y = y;
