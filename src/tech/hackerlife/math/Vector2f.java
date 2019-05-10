@@ -27,8 +27,8 @@ public class Vector2f {
 	 * @return the resultant vector
 	 */
 	public Vector2f add(Vector2f vec) {
-		float x = this.x + vec.X();
-		float y = this.y + vec.Y();
+		float x = this.x + vec.x;
+		float y = this.y + vec.y;
 		return new Vector2f(x, y);
 	}
 	
@@ -45,8 +45,8 @@ public class Vector2f {
 	 * @return the resultant vector
 	 */
 	public Vector2f divideVec(Vector2f vec) {
-		float x = this.x / vec.X();
-		float y = this.y / vec.Y();
+		float x = this.x / vec.x;
+		float y = this.y / vec.y;
 		return new Vector2f(x, y);
 	}
 	
@@ -88,7 +88,12 @@ public class Vector2f {
 	}
 	
 	public boolean equals(Vector2f vec) {
-		return x == vec.X() && y == vec.Y();
+		return x == vec.x && y == vec.y;
+	}
+	
+	public Point scale(float scale) {
+		Vector2f temp = this.mult(scale);
+		return new Point((int)temp.x, (int)temp.y);
 	}
 	
 	/**
@@ -97,27 +102,26 @@ public class Vector2f {
 	public void drawVector(Graphics g, Vector2f pos, float scale, Color vectorColor) {
 		g.setColor(vectorColor);
 		
-		Vector2f scaledInitial = pos.mult(scale);
-		Vector2f scaledFinal = this.mult(scale);
-		scaledFinal = scaledFinal.add(scaledInitial);
-	    int dx = (int) (scaledFinal.X() - scaledInitial.X());
-	    int dy = (int) (scaledFinal.Y() - scaledInitial.Y());
+		Point scaledInitial = pos.scale(scale);
+		Point scaledFinal = this.scale(scale);
+	    int dx = scaledFinal.x;
+	    int dy = scaledFinal.y;
 	    double D = Math.sqrt(dx*dx + dy*dy);
 	    double xm = D - VECTOR_ARROW_SIZE, xn = xm, ym = VECTOR_ARROW_SIZE, yn = -VECTOR_ARROW_SIZE, x;
 	    double sin = dy / D, cos = dx / D;
 
-	    x = xm*cos - ym*sin + scaledInitial.X();
-	    ym = xm*sin + ym*cos + scaledInitial.Y();
+	    x = xm*cos - ym*sin + scaledInitial.x;
+	    ym = xm*sin + ym*cos + scaledInitial.y;
 	    xm = x;
 
-	    x = xn*cos - yn*sin + scaledInitial.X();
-	    yn = xn*sin + yn*cos + scaledInitial.Y();
+	    x = xn*cos - yn*sin + scaledInitial.x;
+	    yn = xn*sin + yn*cos + scaledInitial.y;
 	    xn = x;
 
-	    int[] xpoints = {(int) scaledFinal.X(), (int) xm, (int) xn};
-	    int[] ypoints = {(int) scaledFinal.Y(), (int) ym, (int) yn};
+	    int[] xpoints = {scaledFinal.x, (int) xm, (int) xn};
+	    int[] ypoints = {scaledFinal.y, (int) ym, (int) yn};
 
-	    g.drawLine((int) scaledInitial.X(), (int) scaledInitial.Y(), (int) scaledFinal.X(), (int) scaledFinal.Y());
+	    g.drawLine(scaledInitial.x, scaledInitial.y, scaledFinal.x, scaledFinal.y);
 	    g.fillPolygon(xpoints, ypoints, 3);
 	}
 	
