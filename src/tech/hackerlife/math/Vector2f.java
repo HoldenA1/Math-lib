@@ -106,6 +106,7 @@ public class Vector2f {
 		Point scaledFinal = this.scale(scale);
 	    int dx = scaledFinal.x;
 	    int dy = scaledFinal.y;
+	    scaledFinal.translate(scaledInitial.x, scaledInitial.y);
 	    double D = Math.sqrt(dx*dx + dy*dy);
 	    double xm = D - VECTOR_ARROW_SIZE, xn = xm, ym = VECTOR_ARROW_SIZE, yn = -VECTOR_ARROW_SIZE, x;
 	    double sin = dy / D, cos = dx / D;
