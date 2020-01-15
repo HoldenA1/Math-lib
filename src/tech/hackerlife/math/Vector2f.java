@@ -3,11 +3,9 @@ package tech.hackerlife.math;
 import java.awt.*;
 
 public class Vector2f {
-	// Down is positive!!
-	float x, y;
-	final float VECTOR_ARROW_SIZE = 10;
+	public float x, y;
 	
-	public static final Vector2f ZERO = new Vector2f(0, 0);
+	private static final Vector2f ZERO = new Vector2f(0, 0);
 	
 	public Vector2f(float x, float y) {
 		this.x = x;
@@ -44,13 +42,13 @@ public class Vector2f {
 	/**
 	 * @return the resultant vector
 	 */
-	public Vector2f divideVec(Vector2f vec) {
+	public Vector2f div(Vector2f vec) {
 		float x = this.x / vec.x;
 		float y = this.y / vec.y;
 		return new Vector2f(x, y);
 	}
 	
-	public Vector2f divideScalar(float scalar) {
+	public Vector2f div(float scalar) {
 		float x = this.x / scalar;
 		float y = this.y / scalar;
 		return new Vector2f(x, y);
@@ -75,7 +73,7 @@ public class Vector2f {
 	public Vector2f normalize() {
 		float magnitude = this.mag();
 		if (magnitude > 0) {
-			return this.divideScalar(magnitude);
+			return this.div(magnitude);
 		}
 		return this;
 	}
@@ -96,54 +94,12 @@ public class Vector2f {
 		return new Point((int)temp.x, (int)temp.y);
 	}
 	
-	/**
-	 * @param scale Put 1 for normal use
-	 */
-	public void drawVector(Graphics g, Vector2f pos, float scale, Color vectorColor) {
-		g.setColor(vectorColor);
-		
-		Point scaledInitial = pos.scale(scale);
-		Point scaledFinal = this.scale(scale);
-	    int dx = scaledFinal.x;
-	    int dy = scaledFinal.y;
-	    scaledFinal.translate(scaledInitial.x, scaledInitial.y);
-	    double D = Math.sqrt(dx*dx + dy*dy);
-	    double xm = D - VECTOR_ARROW_SIZE, xn = xm, ym = VECTOR_ARROW_SIZE, yn = -VECTOR_ARROW_SIZE, x;
-	    double sin = dy / D, cos = dx / D;
-
-	    x = xm*cos - ym*sin + scaledInitial.x;
-	    ym = xm*sin + ym*cos + scaledInitial.y;
-	    xm = x;
-
-	    x = xn*cos - yn*sin + scaledInitial.x;
-	    yn = xn*sin + yn*cos + scaledInitial.y;
-	    xn = x;
-
-	    int[] xpoints = {scaledFinal.x, (int) xm, (int) xn};
-	    int[] ypoints = {scaledFinal.y, (int) ym, (int) yn};
-
-	    g.drawLine(scaledInitial.x, scaledInitial.y, scaledFinal.x, scaledFinal.y);
-	    g.fillPolygon(xpoints, ypoints, 3);
-	}
-	
-	public float X() {
-		return x;
-	}
-	
-	public float Y() {
-		return y;
-	}
-	
-	public void setX(float x) {
-		this.x = x;
-	}
-	
-	public void setY(float y) {
-		this.y = y;
-	}
-	
 	public String toString() {
 		return "(" + x + ", " + y + ")";
+	}
+	
+	public Vector2f zero() {
+		return ZERO;
 	}
 
 }
