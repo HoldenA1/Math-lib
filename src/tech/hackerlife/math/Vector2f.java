@@ -5,8 +5,6 @@ import java.awt.*;
 public class Vector2f {
 	public float x, y;
 	
-	private static final Vector2f ZERO = new Vector2f(0, 0);
-	
 	public Vector2f(float x, float y) {
 		this.x = x;
 		this.y = y;
@@ -98,8 +96,8 @@ public class Vector2f {
 		return "(" + x + ", " + y + ")";
 	}
 	
-	public Vector2f zero() {
-		return ZERO;
+	public static Vector2f zero() {
+		return new Vector2f(0, 0);
 	}
 
 }
